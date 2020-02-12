@@ -5,4 +5,4 @@
   vars:
     morpheus_appliance_url: "https://{{ play_hosts[0] }}"
   roles:
-    - ../../../ansible-role-morpheus
+    - morpheus

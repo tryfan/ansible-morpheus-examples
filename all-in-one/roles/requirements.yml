@@ -1,0 +1,2 @@
+- src: https://github.com/tryfan/ansible-role-morpheus
+  name: morpheus

@@ -1,0 +1,8 @@
+---
+- hosts: morpheus
+  gather_facts: true
+  become: true
+  vars:
+    morpheus_appliance_url: "https://{{ play_hosts[0] }}"
+  roles:
+    - ../../../ansible-role-morpheus

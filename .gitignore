@@ -1,4 +1,6 @@
 venv
 all-in-one/roles/**/
 all-in-one/inventory
+n_node_ha/roles/**/
+n_node_ha/inventory
 .idea

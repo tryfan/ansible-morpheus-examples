@@ -34,4 +34,18 @@ ansible-galaxy install -r roles/requirements.yml --roles-path=roles/
 ansible-playbook -i inventory all_in_one.yml
 ```
 
-## HA 
+## n-node HA Example
+
+This example assumes the following:
+
+3 CentOS instances for the Morpheus UI
+3 CentOS instances for the Percona XtraDB
+
+RabbitMQ will be running on the UI nodes, but will not be using the version bundled with Morpheus.  Elasticsearch will be clustered among the UI nodes.  Percona XtraDB will be installed on the 3 DB nodes with the options specified in group_vars/all.
+
+Feel free to customize group_vars/all for any password changes, etc.  Use inventory.dist as a template for your ansible inventory.  The `morpheus_appliance_url` should be a load balancer pointed to the Morpheus nodes.  In absence of a load balancer, the default is the first Morpheus node listed in the inventory in the `[morpheus]` group.
+
+```
+ansible-galaxy install -r roles/requirements.yml --roles-path=roles/
+ansible-playbook -i inventory n_node_ha.yml
+``` 

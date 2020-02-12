@@ -1,0 +1,52 @@
+morpheus_appliance_url: "https://{{ play_hosts[0] }}"
+morpheus_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.2-1.el7.x86_64.rpm
+morpheus_offline_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-offline-4.1.2-1.noarch.rpm
+
+morpheus_elastic_external: false
+
+rabbitmq_plugins:
+    - rabbitmq_stomp
+    - rabbitmq_management
+rabbitmq_vhost_name: morpheus
+rabbitmq_mgmt_user: morpheus
+rabbitmq_mgmt_password: morphpass
+rabbitmq_user: rabbitmquser
+rabbitmq_password: rabbitmqpassword
+
+morpheus_rabbitmq_external: true
+morpheus_rabbitmq_lb: 127.0.0.1
+morpheus_rabbitmq_user: "{{ rabbitmq_user }}"
+morpheus_rabbitmq_password: "{{ rabbitmq_password }}"
+morpheus_rabbitmq_vhost: "{{ rabbitmq_vhost_name }}"
+
+morpheus_mysql_external: true
+morpheus_db_group: db
+morpheus_db: morpheusdb
+morpheus_db_user: morpheus
+morpheus_db_pass: Pa55w0rd!
+morpheus_db_port: 3306
+morpheus_db_url_override: true
+morpheus_db_url_override_options: "/{{ morpheus_db }}?autoReconnect=true&useUnicode=true&characterEncoding=utf8&failOverReadOnly=false&useSSL=false"
+
+xtradb_cluster_name: "morpheus"
+xtradb_sst_user: sstuser
+xtradb_sst_password: s3cr3t
+xtradb_root_password: evenmores3cr3t
+
+xtradb_nodes_group: "{{ morpheus_db_group }}"
+xtradb_bind_interface: eth0
+
+xtradb_bind_address: "{{ ansible_default_ipv4.address }}"
+xtradb_wsrep_cluster_address: "gcomm://{{ groups[xtradb_nodes_group] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
+xtradb_master_node: "{{ hostvars[ groups[xtradb_nodes_group][0] ].ansible_default_ipv4.address }}"
+xtradb_pxc_strict_mode: "PERMISSIVE"
+xtradb_wsrep_sync_wait: 2
+
+xtradb_databases:
+    - name: "{{morpheus_db}}"
+xtradb_users:
+    - name: "{{ morpheus_db_user }}"
+      host: '%'
+      password: "{{ morpheus_db_pass }}"
+      priv: "*.*:SELECT,PROCESS,SHOW DATABASES/{{morpheus_db}}.*:ALL"
+      append_privs: false

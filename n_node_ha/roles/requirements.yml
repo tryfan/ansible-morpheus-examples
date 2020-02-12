@@ -1,0 +1,8 @@
+- src: https://github.com/tryfan/ansible-role-morpheus
+  name: morpheus
+
+- src: https://github.com/tryfan/ansible-role-rabbitmq-cluster
+  name: rabbitmq
+
+- src: https://github.com/tryfan/ansible-role-XtraDB-Cluster
+  name: xtradb-cluster

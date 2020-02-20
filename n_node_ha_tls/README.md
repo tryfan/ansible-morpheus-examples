@@ -2,8 +2,8 @@
 
 This example assumes the following:
 
-3 CentOS instances for the Morpheus UI
-3 CentOS instances for the Percona XtraDB
+- 3 CentOS instances for the Morpheus UI
+- 3 CentOS instances for the Percona XtraDB
 
 ## Setup
 Run the following in the example directory

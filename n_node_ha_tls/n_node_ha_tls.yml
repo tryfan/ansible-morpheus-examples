@@ -1,0 +1,18 @@
+---
+- hosts: db
+  gather_facts: true
+  become: true
+  roles:
+    - ansible-role-xtradb-cluster
+
+- hosts: rabbitmq
+  gather_facts: true
+  become: true
+  roles:
+    - ansible-role-rabbitmq-cluster
+
+- hosts: morpheus
+  gather_facts: true
+  become: true
+  roles:
+    - ansible-role-morpheus

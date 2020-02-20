@@ -1,0 +1,14 @@
+[morpheus]
+your_hosts_go_here
+your_hosts_go_here
+your_hosts_go_here
+
+; [db]
+; your_hosts_go_here
+; your_hosts_go_here
+; your_hosts_go_here
+
+; [rabbitmq]
+; your_hosts_go_here
+; your_hosts_go_here
+; your_hosts_go_here

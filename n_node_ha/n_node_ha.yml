@@ -1,4 +1,10 @@
 ---
+- hosts: elasticsearch
+  gather_facts: true
+  become: true
+  roles:
+    - elasticsearch
+
 - hosts: db
   gather_facts: true
   become: true

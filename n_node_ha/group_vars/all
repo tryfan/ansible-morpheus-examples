@@ -1,8 +1,32 @@
 morpheus_appliance_url: "https://{{ play_hosts[0] }}"
-morpheus_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.2-1.el7.x86_64.rpm
-morpheus_offline_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-offline-4.1.2-1.noarch.rpm
+#morpheus_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.2-1.el7.x86_64.rpm
+#morpheus_offline_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-offline-4.1.2-1.noarch.rpm
 
-morpheus_elastic_external: false
+morpheus_elastic_external: true
+morpheus_elastic_cluster_name: morpheus
+morpheus_elastic_hosts:
+    - host: "{{ hostvars[ groups['elasticsearch'][0] ].inventory_hostname }}"
+      port: 9200
+    - host: "{{ hostvars[ groups['elasticsearch'][1] ].inventory_hostname }}"
+      port: 9200
+    - host: "{{ hostvars[ groups['elasticsearch'][2] ].inventory_hostname }}"
+      port: 9200
+
+es_config:
+    node.name: "{{ inventory_hostname }}"
+    cluster.name: "morpheus"
+    #cluster.initial_master_nodes: "[{{ play_hosts|join(',') | regex_replace('^', '\"') | regex_replace(',', '\",\"') | regex_replace('$', '\"') }}]"
+    cluster.initial_master_nodes: "{{ play_hosts[0] }}"
+    discovery.seed_hosts: "[ {{ play_hosts | product(['9300']) | map('join', ':') | join(',') | regex_replace('^', '\"') | regex_replace(',', '\",\"') | regex_replace('$', '\"') }} ]"
+    http.port: 9200
+    transport.port: 9300
+    node.data: true
+    node.master: true
+    bootstrap.memory_lock: true
+    network.bind_host: "0.0.0.0"
+    network.publish_host: "{{ inventory_hostname }}"
+es_heap_size: 1g
+es_api_port: 9200
 
 rabbitmq_plugins:
     - rabbitmq_stomp

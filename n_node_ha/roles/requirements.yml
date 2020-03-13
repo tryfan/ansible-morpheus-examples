@@ -6,3 +6,7 @@
 
 - src: https://github.com/tryfan/ansible-role-XtraDB-Cluster
   name: xtradb-cluster
+
+- src: https://github.com/elastic/ansible-elasticsearch
+  name: elasticsearch
+  version: 7.6.1

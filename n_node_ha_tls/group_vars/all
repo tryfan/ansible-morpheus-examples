@@ -1,8 +1,81 @@
 morpheus_appliance_url: "https://{{ play_hosts[0] }}"
-morpheus_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.2-2.el7.x86_64.rpm
-morpheus_offline_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-offline-4.1.2-1.noarch.rpm
+#morpheus_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-4.1.2-2.el7.x86_64.rpm
+#morpheus_offline_package_centos: https://downloads.morpheusdata.com/files/morpheus-appliance-offline-4.1.2-1.noarch.rpm
+#morpheus_trusted_ca_files:
+#    - ca.pem
+#    - es_ca.pem
 
-morpheus_elastic_external: false
+morpheus_elastic_external: true
+morpheus_elastic_cluster_name: morpheus
+morpheus_elastic_tls: true
+morpheus_elastic_auth_user: morpheus
+morpheus_elastic_auth_password: morphpass
+morpheus_elastic_ca_file: es_ca.pem
+morpheus_elastic_hosts:
+    - host: "{{ hostvars[ groups['elasticsearch'][0] ].inventory_hostname }}"
+      port: 9200
+    - host: "{{ hostvars[ groups['elasticsearch'][1] ].inventory_hostname }}"
+      port: 9200
+    - host: "{{ hostvars[ groups['elasticsearch'][2] ].inventory_hostname }}"
+      port: 9200
+
+
+es_config:
+    node.name: "{{ inventory_hostname }}"
+    cluster.name: "morpheus"
+    #cluster.initial_master_nodes: "[{{ play_hosts|join(',') | regex_replace('^', '\"') | regex_replace(',', '\",\"') | regex_replace('$', '\"') }}]"
+    cluster.initial_master_nodes: "{{ play_hosts[0] }}"
+    discovery.seed_hosts: "[ {{ play_hosts | product(['9300']) | map('join', ':') | join(',') | regex_replace('^', '\"') | regex_replace(',', '\",\"') | regex_replace('$', '\"') }} ]"
+    http.port: 9200
+    transport.port: 9300
+    node.data: true
+    node.master: true
+    bootstrap.memory_lock: true
+    network.bind_host: "0.0.0.0"
+    network.publish_host: "{{ inventory_hostname }}"
+    #xpack.security.transport.ssl.enabled: true
+    #xpack.security.transport.ssl.verification_mode: certificate
+    #xpack.security.transport.ssl.key: /etc/elasticsearch/server-cert.pem
+    #xpack.security.transport.ssl.certificate: /etc/elasticsearch/server-key.pem
+    #xpack.security.transport.ssl.certificate_authorities: [ "/etc/elasticsearch/ca-bundle.crt" ]
+es_heap_size: 1g
+es_enable_xpack: true
+es_api_port: 9200
+es_api_basic_auth_username: admin
+es_api_basic_auth_password: morphpass$
+es_enable_transport_ssl: true
+es_enable_http_ssl: true
+es_enable_auto_ssl_configuration: true
+es_ssl_verification_mode: none
+es_ssl_certificate: es_server.pem
+es_ssl_key: es_server.key
+es_ssl_certificate_authority: es_ca.pem
+# es_xpack_trial: true
+es_xpack_features:
+    - security
+es_users:
+    file:
+        morpheus:
+            password: morphpass
+            roles:
+                - morpheusrole
+es_roles:
+    file:
+        morpheusrole:
+            cluster:
+                - monitor
+                - manage_index_templates
+            indices:
+                - names:
+                    - "activities"
+                    - "azure-marketplace*"
+                    - "backup_results"
+                    - "check_history"
+                    - "logs*"
+                    - "morpheus*"
+                    - "stats*"
+                  privileges:
+                    - all
 
 rabbitmq_plugins:
     - rabbitmq_stomp

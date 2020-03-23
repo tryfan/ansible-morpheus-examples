@@ -1,0 +1,12 @@
+- src: https://github.com/elastic/ansible-elasticsearch
+  name: elasticsearch
+  version: 7.6.1
+
+- src: https://github.com/tryfan/ansible-role-morpheus
+  name: morpheus
+
+- src: https://github.com/tryfan/ansible-role-rabbitmq-cluster
+  name: rabbitmq-cluster
+
+- src: https://github.com/tryfan/ansible-role-XtraDB-Cluster
+  name: xtradb-cluster

@@ -116,6 +116,9 @@ xtradb_tls_enabled: true
 # Boolean for self-signed certificates
 xtradb_tls_self_signed: false
 xtradb_tls_custom_cert: true
+xtradb_tls_ca_filename: ca.pem
+xtradb_tls_cert_filename: server-cert.pem
+xtradb_tls_key_filename: server-key.pem
 
 # Disallow non-SSL clients
 xtradb_ssl_client_only: true

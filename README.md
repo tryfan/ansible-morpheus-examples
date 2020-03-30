@@ -9,9 +9,9 @@ You will need:
     - 16 GB RAM
     - 200 GB Storage
   - Full HA Installation
-    - 6 VMs
+    - 9 VMs
     - 2 Cores
-    - 16 GB RAM for DBs, 8 GB RAM for UIs
+    - 16 GB RAM for DBs, 8 GB RAM for UI, Elasticsearch nodes
     - 200 GB Each
     - Shared Storage for the UI nodes (optional)
 
@@ -39,6 +39,29 @@ ansible-playbook -i inventory all_in_one.yml
 This example assumes the following:
 
 3 CentOS instances for the Morpheus UI
+
+3 CentOS instances for Elasticsearch
+
+3 CentOS instances for the Percona XtraDB
+
+RabbitMQ will be running on the UI nodes, but will not be using the version bundled with Morpheus.  Elasticsearch will be clustered among the UI nodes.  Percona XtraDB will be installed on the 3 DB nodes with the options specified in group_vars/all.
+
+Feel free to customize group_vars/all for any password changes, etc.  Use inventory.dist as a template for your ansible inventory.  The `morpheus_appliance_url` should be a load balancer pointed to the Morpheus nodes.  In absence of a load balancer, the default is the first Morpheus node listed in the inventory in the `[morpheus]` group.
+
+```
+ansible-galaxy install -r roles/requirements.yml --roles-path=roles/
+ansible-playbook -i inventory n_node_ha.yml
+``` 
+
+## n-node HA TLS Example
+
+This will install TLS encrypted configurations of the standard HA deployment.  
+
+This example assumes the following:
+
+3 CentOS instances for the Morpheus UI
+
+3 CentOS instances for Elasticsearch
 
 3 CentOS instances for the Percona XtraDB
 

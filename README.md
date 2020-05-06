@@ -1,7 +1,7 @@
 # Morpheus Installation Using Ansible
 This is a tutorial on getting Morpheus up and running on CentOS 7 using Ansible.
 You will need: 
-- A workstation running Ansible
+- A workstation running Ansible >= 2.7
 - Enough VMs to run your chosen installation type:
   - All-in-one Appliance:
     - 1 VM

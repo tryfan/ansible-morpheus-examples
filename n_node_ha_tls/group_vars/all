@@ -55,10 +55,10 @@ es_roles:
                 - manage_index_templates
             indices:
                 - names:
-                    - "activities"
+                    - "activities*"
                     - "azure-marketplace*"
-                    - "backup_results"
-                    - "check_history"
+                    - "backup_results*"
+                    - "check_history*"
                     - "logs*"
                     - "morpheus*"
                     - "stats*"

@@ -2,3 +2,7 @@ venv
 **/inventory
 .idea
 **/roles/**
+*.retry
+variables.tf
+.terraform
+*tfstate*

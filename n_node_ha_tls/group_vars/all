@@ -51,17 +51,10 @@ es_roles:
     file:
         morpheusrole:
             cluster:
-                - monitor
-                - manage_index_templates
+                - all
             indices:
                 - names:
-                    - "activities*"
-                    - "azure-marketplace*"
-                    - "backup_results*"
-                    - "check_history*"
-                    - "logs*"
-                    - "morpheus*"
-                    - "stats*"
+                    - "*"
                   privileges:
                     - all
 

@@ -9,4 +9,4 @@
 
 - src: https://github.com/elastic/ansible-elasticsearch
   name: elasticsearch
-  version: 7.6.2
+  version: v7.16.3

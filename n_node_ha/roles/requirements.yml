@@ -1,10 +1,10 @@
-- src: https://github.com/tryfan/ansible-role-morpheus
+- src: https://github.com/gomorpheus/ansible-role-morpheus
   name: morpheus
 
-- src: https://github.com/tryfan/ansible-role-rabbitmq-cluster
+- src: https://github.com/gomorpheus/ansible-role-rabbitmq-cluster
   name: rabbitmq
 
-- src: https://github.com/tryfan/ansible-role-XtraDB-Cluster
+- src: https://github.com/gomorpheus/ansible-role-XtraDB-Cluster
   name: xtradb-cluster
 
 - src: https://github.com/elastic/ansible-elasticsearch
